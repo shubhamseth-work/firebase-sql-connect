@@ -1,0 +1,57 @@
+Main Modules Covered
+Module	Purpose
+User	Customer details
+Product	Product catalog
+Cart	Temporary shopping cart
+CartItem	Products inside cart
+Order	Final order
+OrderItem	Ordered product details
+
+
+  type User @table {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  email: String! @unique
+  phone: String
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type Product @table {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  description: String
+  category: String!
+  price: Float!
+  stock: Int!
+  imageUrl: String
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type Cart @table {
+  id: UUID! @default(expr: "uuidV4()")
+  userId: UUID!
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type CartItem @table {
+  id: UUID! @default(expr: "uuidV4()")
+  cartId: UUID!
+  productId: UUID!
+  quantity: Int!
+}
+
+type Order @table {
+  id: UUID! @default(expr: "uuidV4()")
+  userId: UUID!
+  totalAmount: Float!
+  status: String!
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type OrderItem @table {
+  id: UUID! @default(expr: "uuidV4()")
+  orderId: UUID!
+  productId: UUID!
+  quantity: Int!
+  price: Float!
+}
